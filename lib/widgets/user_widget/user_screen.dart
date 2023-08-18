@@ -8,14 +8,14 @@ import 'package:dynamic_widget/widgets/user_widget/user_provider.dart';
 import 'package:dynamic_widget/widgets/user_widget/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:random_string/random_string.dart';
 
 class UserScreen extends StatefulWidget implements CustomWidgetInterface {
-  static const routeName = "/register";
-
   UserScreen({Key? key}) : super(key: key);
 
   @override
   State<UserScreen> createState() => _UserScreenState();
+  late String widgetId;
 
   @override
   Map<String, dynamic> appearance = {
@@ -32,7 +32,7 @@ class UserScreen extends StatefulWidget implements CustomWidgetInterface {
   void createEvent(String eventName, [eventData]) {}
 
   @override
-  String get customWidgetId => "UserScreenId";
+  String get customWidgetId => widgetId;
 
   @override
   DataStore get dataStore => throw UnimplementedError();
@@ -87,7 +87,7 @@ class _UserScreenState extends State<UserScreen> {
   final _registerFormKey = GlobalKey<FormState>();
 
   String _selectedGender = "Male";
-
+  bool checkbox = false;
   final List<String> _cities = [
     'Addis Ababa',
     'Bahirdar',
@@ -104,10 +104,14 @@ class _UserScreenState extends State<UserScreen> {
     });
   }
 
+  String generateId({int length = 8}) {
+    return randomAlphaNumeric(length);
+  }
+
   @override
   void initState() {
     _onProcess = false;
-
+    widget.widgetId = generateId();
     super.initState();
   }
 
@@ -163,6 +167,9 @@ class _UserScreenState extends State<UserScreen> {
                                 value: 'Male',
                                 groupValue: _selectedGender,
                                 onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
                                   Provider.of<UserProvider>(context,
                                           listen: false)
                                       .gender
@@ -175,6 +182,9 @@ class _UserScreenState extends State<UserScreen> {
                                 value: 'Female',
                                 groupValue: _selectedGender,
                                 onChanged: (value) {
+                                  setState(() {
+                                    _selectedGender = value!;
+                                  });
                                   Provider.of<UserProvider>(context,
                                           listen: false)
                                       .gender
@@ -195,6 +205,9 @@ class _UserScreenState extends State<UserScreen> {
                                 .acceptTerms
                                 .value,
                             onChanged: (value) {
+                              setState(() {
+                                checkbox = value!;
+                              });
                               Provider.of<UserProvider>(context, listen: false)
                                   .acceptTerms
                                   .value = value!;
@@ -281,7 +294,6 @@ class _UserScreenState extends State<UserScreen> {
             user: jsonData,
           ),
         ),
-        
       );
     }
   }

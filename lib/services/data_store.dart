@@ -24,22 +24,3 @@ class DataStore with ChangeNotifier {
     notifyListeners();
   }
 }
-// {
-//   "widget1Id": {
-//     "value": "Some Value",
-//     "appearance": {
-//       "color": "#FF5733",
-//       "fontSize": 16
-//       // ... other appearance properties
-//     },
-//     "events": [
-//       // Example events
-//       {"eventName": "clicked", "timestamp": "2023-08-13T12:00:00Z"},
-//       {"eventName": "valueChanged", "timestamp": "2023-08-13T12:05:00Z"}
-//     ]
-//   },
-//   "widget2Id": {
-//     // ... similar structure as widget1Id
-//   }
-//   // ... other widget data
-// }
